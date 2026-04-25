@@ -6,10 +6,11 @@ import dearMusic from "../public/dear-music.jpg";
 import iLoveBrent from "../public/i-love-brent-faiyaz.jpg";
 import progressImportant from "../public/progress-important.jpg";
 import stayGoated from "../public/stay-goated.jpg";
+import programming from "../public/programming.webp";
 
 export default function Home() {
     return (
-        <div className="max-w-3xl mx-auto py-10">
+        <div className="pb-10">
             <p>Hello! My name is Rassul.</p>
             <p>I love writing code just for fun.</p>
             <br />
@@ -76,6 +77,11 @@ export default function Home() {
                 <Image
                     src={stayGoated}
                     alt="Stay goated"
+                    className="rounded-lg w-full h-auto"
+                />
+                <Image
+                    src={programming}
+                    alt="Programming"
                     className="rounded-lg w-full h-auto"
                 />
             </div>
