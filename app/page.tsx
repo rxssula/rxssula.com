@@ -27,9 +27,9 @@ export default function Home() {
                 Check out my <CustomLink href={"/blog"}>blog</CustomLink>.
             </p>
             <br />
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                 Socials:{" "}
-                <div className="flex flex-row gap-2 items-center">
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                     <span>
                         <CustomLink href="https://github.com/rxssula">
                             github
@@ -53,7 +53,7 @@ export default function Home() {
             </div>
             <br />
             <h1>These images can describe what person I am.</h1>
-            <div className="mt-8 columns-1 sm:columns-2 gap-4 space-y-4">
+            <div className="mt-6 sm:mt-8 columns-1 sm:columns-2 gap-4 space-y-4">
                 <Image
                     src={chooseFun}
                     alt="Choose fun"
