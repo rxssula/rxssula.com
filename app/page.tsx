@@ -12,11 +12,29 @@ export default function Home() {
     return (
         <div className="pb-10">
             <p>Hello! My name is Rassul.</p>
-            <p>I love writing code just for fun.</p>
+            <br />
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                Tools that I am interested in right now:{" "}
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                    <span>
+                        <CustomLink href="https://effect.website">
+                            Effect
+                        </CustomLink>
+                    </span>
+                    <span>
+                        <CustomLink href="https://pi.dev">pi</CustomLink>
+                    </span>
+                    <span>
+                        <CustomLink href="https://opencode.ai">
+                            OpenCode
+                        </CustomLink>
+                    </span>
+                </div>
+            </div>
             <br />
             <p>
-                Outside of coding I enjoy my time with my girlfriend, play
-                football, and maybe record videos on my{" "}
+                Outside of coding I enjoy my time with my girlfriend, playing
+                football, and record videos on my{" "}
                 <CustomLink href="https://www.youtube.com/@rxssula">
                     YouTube channel
                 </CustomLink>
