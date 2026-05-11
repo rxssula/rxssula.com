@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
+import BackButton from "@/components/BackButton";
 
 const postsDir = path.join(process.cwd(), "content");
 const dateFormatter = new Intl.DateTimeFormat("en", {
@@ -38,6 +39,9 @@ export default async function Page({
 
     return (
         <article className="pb-10">
+            <div className="mb-6 sm:mb-8">
+                <BackButton href="/blog" label="back to blog" />
+            </div>
             <header className="mb-8 sm:mb-10">
                 <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight">
                     {title}

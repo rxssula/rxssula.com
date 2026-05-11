@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import PostItemsList from "@/components/PostItemsList";
 import type { PostItemData } from "@/components/PostItem";
+import BackButton from "@/components/BackButton";
 import matter from "gray-matter";
 import path from "node:path";
 
@@ -84,6 +85,9 @@ export default async function BlogPage() {
 
     return (
         <main className="pb-10">
+            <div className="mb-6 sm:mb-8">
+                <BackButton href="/" label="back" />
+            </div>
             <header className="mb-8 sm:mb-10">
                 <h1 className="text-2xl sm:text-3xl font-semibold">Blog</h1>
                 <p className="mt-3 sm:mt-4 max-w-xl leading-7 opacity-80">
