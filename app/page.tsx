@@ -29,6 +29,11 @@ export default function Home() {
                             OpenCode
                         </CustomLink>
                     </span>
+                    <span>
+                        <CustomLink href="https://go.dev">
+                            Golang
+                        </CustomLink>
+                    </span>
                 </div>
             </div>
             <br />
