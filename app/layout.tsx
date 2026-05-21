@@ -8,8 +8,30 @@ const geistMono = Geist_Mono({
     subsets: ["latin"],
 });
 
+const siteUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3000";
+
 export const metadata: Metadata = {
+    metadataBase: new URL(siteUrl),
     title: "rxssula",
+    openGraph: {
+        title: "rxssula",
+        type: "website",
+        images: [
+            {
+                url: "/og.png",
+                width: 1280,
+                height: 720,
+                alt: "The best engineer",
+            },
+        ],
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "rxssula",
+        images: ["/og.png"],
+    },
 };
 
 export default function RootLayout({
