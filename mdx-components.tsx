@@ -95,7 +95,7 @@ const components: MDXComponents = {
 
         return (
             <code
-                className="rounded bg-foreground/10 px-1.5 py-0.5 text-[0.875em] font-mono"
+                className="rounded bg-foreground/10 px-1.5 py-0.5 text-[0.875em] font-mono box-decoration-clone"
                 {...(props as React.HTMLAttributes<HTMLElement>)}
             />
         );
