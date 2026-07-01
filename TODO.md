@@ -1,3 +1,3 @@
 # TODO
 
-- [ ] OG image for blog posts and for the website
+- [x] OG image for blog posts and for the website
