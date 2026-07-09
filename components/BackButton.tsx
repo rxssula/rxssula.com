@@ -12,9 +12,9 @@ export default function BackButton({
     return (
         <Link
             href={href}
-            className="group inline-flex items-center gap-2 text-sm text-[#f54703] opacity-80 transition-all duration-200 hover:opacity-100"
+            className="motion-back-link group inline-flex items-center gap-2 text-sm text-[#f54703] opacity-80 transition-[opacity,transform] duration-150 ease-out active:scale-[0.97]"
         >
-            <span className="inline-block transition-transform duration-200 group-hover:-translate-x-1">
+            <span className="motion-back-arrow inline-block transition-transform duration-150 ease-out">
                 ←
             </span>
             <span className="font-mono">{label}</span>

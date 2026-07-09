@@ -39,10 +39,10 @@ export default async function Page({
 
     return (
         <article className="pb-10">
-            <div className="mb-6 sm:mb-8">
+            <div className="motion-section mb-6 sm:mb-8">
                 <BackButton href="/blog" label="back to blog" />
             </div>
-            <header className="mb-8 sm:mb-10">
+            <header className="motion-section mb-8 sm:mb-10">
                 <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight">
                     {title}
                 </h1>
@@ -61,7 +61,9 @@ export default async function Page({
                 )}
             </header>
 
-            <Post />
+            <div className="motion-section">
+                <Post />
+            </div>
         </article>
     );
 }
