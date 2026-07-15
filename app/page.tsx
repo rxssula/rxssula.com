@@ -88,32 +88,32 @@ export default function Home() {
                 <Image
                     src={chooseFun}
                     alt="Choose fun"
-                    className="motion-image w-full rounded-lg h-auto"
+                    className="w-full rounded-lg h-auto"
                 />
                 <Image
                     src={dearMusic}
                     alt="Dear music"
-                    className="motion-image w-full rounded-lg h-auto"
+                    className="w-full rounded-lg h-auto"
                 />
                 <Image
                     src={iLoveBrent}
                     alt="I love Brent Faiyaz"
-                    className="motion-image w-full rounded-lg h-auto"
+                    className="w-full rounded-lg h-auto"
                 />
                 <Image
                     src={progressImportant}
                     alt="Progress important"
-                    className="motion-image w-full rounded-lg h-auto"
+                    className="w-full rounded-lg h-auto"
                 />
                 <Image
                     src={stayGoated}
                     alt="Stay goated"
-                    className="motion-image w-full rounded-lg h-auto"
+                    className="w-full rounded-lg h-auto"
                 />
                 <Image
                     src={programming}
                     alt="Programming"
-                    className="motion-image w-full rounded-lg h-auto"
+                    className="w-full rounded-lg h-auto"
                 />
             </div>
         </div>

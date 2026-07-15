@@ -85,17 +85,17 @@ export default async function BlogPage() {
 
     return (
         <main className="pb-10">
-            <div className="motion-section mb-6 sm:mb-8">
+            <div className="mb-6 sm:mb-8">
                 <BackButton href="/" label="back" />
             </div>
-            <header className="motion-section mb-8 sm:mb-10">
+            <header className="mb-8 sm:mb-10">
                 <h1 className="text-2xl sm:text-3xl font-semibold">Blog</h1>
                 <p className="mt-3 sm:mt-4 max-w-xl leading-7 opacity-80">
                     Just something that I want to talk about.
                 </p>
             </header>
 
-            <div className="motion-section">
+            <div>
                 <PostItemsList posts={posts} />
             </div>
         </main>
