@@ -17,6 +17,7 @@ const PLAYBACK_FRESH_MS = 12_000;
 const PLAYBACK_STALE_MS = 2 * 60_000;
 const TASTE_FRESH_MS = 60 * 60_000;
 const TASTE_STALE_MS = 24 * 60 * 60_000;
+const FETCH_TIMEOUT_MS = 10_000;
 
 type SpotifyImage = {
     url: string;
@@ -123,6 +124,17 @@ async function readJson<T>(response: Response): Promise<T> {
     return (await response.json()) as T;
 }
 
+async function fetchWithTimeout(input: string | URL, init?: RequestInit) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+
+    try {
+        return await fetch(input, { ...init, signal: controller.signal });
+    } finally {
+        clearTimeout(timeout);
+    }
+}
+
 async function refreshAccessToken() {
     if (reauthorizationRequired) {
         throw new SpotifyReauthorizationError();
@@ -135,7 +147,7 @@ async function refreshAccessToken() {
         throw new Error("Spotify credentials are not configured.");
     }
 
-    const response = await fetch(TOKEN_ENDPOINT, {
+    const response = await fetchWithTimeout(TOKEN_ENDPOINT, {
         method: "POST",
         headers: {
             Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString("base64")}`,
@@ -205,7 +217,7 @@ async function spotifyFetch(path: string, retryUnauthorized = true) {
     }
 
     const token = await getAccessToken();
-    const response = await fetch(`${API_BASE_URL}${path}`, {
+    const response = await fetchWithTimeout(`${API_BASE_URL}${path}`, {
         headers: { Authorization: `Bearer ${token}` },
         cache: "no-store",
     });
@@ -327,8 +339,8 @@ async function loadPlayback(): Promise<SpotifyPlayback> {
             : recentlyPlayed[0]
               ? "recent"
               : "idle",
-        isPlaying: playback?.is_playing ?? false,
-        progressMs: playback?.progress_ms ?? 0,
+        isPlaying: item ? (playback?.is_playing ?? false) : false,
+        progressMs: item ? (playback?.progress_ms ?? 0) : 0,
         fetchedAt: Date.now(),
         item: item ?? recentlyPlayed[0] ?? null,
         recent,
@@ -441,6 +453,7 @@ async function getSharedValue<T>(
             return value;
         })
         .catch((error: unknown) => {
+            if (isSpotifyAuthorizationError(error)) throw error;
             if (cache && cache.staleUntil > Date.now()) return cache.value;
             throw error;
         })

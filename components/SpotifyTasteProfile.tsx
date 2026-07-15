@@ -358,12 +358,20 @@ function BarChart({
     label: string;
 }) {
     const maximum = Math.max(...buckets.map((bucket) => bucket.count), 1);
+    const description = `${label}. ${buckets
+        .map((bucket) => {
+            const bucketLabel = formatLabel?.(bucket.label) ?? bucket.label;
+            const plays = bucket.count === 1 ? "play" : "plays";
+
+            return `${bucketLabel}: ${bucket.count} ${plays}`;
+        })
+        .join("; ")}.`;
 
     return (
         <div
             className="music-bars flex h-36 min-w-max items-end gap-1.5"
             role="img"
-            aria-label={label}
+            aria-label={description}
         >
             {buckets.map((bucket) => (
                 <div

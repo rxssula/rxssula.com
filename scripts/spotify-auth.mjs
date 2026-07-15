@@ -41,6 +41,9 @@ function openBrowser(url) {
         detached: true,
         stdio: "ignore",
     });
+    child.on("error", (error) => {
+        console.warn(`Could not open the browser automatically: ${error.message}`);
+    });
     child.unref();
 }
 

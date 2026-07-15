@@ -10,6 +10,7 @@ import type {
 } from "@/lib/spotify-types";
 
 const REFRESH_INTERVAL_MS = 30_000;
+const REQUEST_TIMEOUT_MS = 10_000;
 
 function formatTime(milliseconds: number) {
     const totalSeconds = Math.max(0, Math.floor(milliseconds / 1_000));
@@ -182,6 +183,7 @@ function LoadingState() {
     return (
         <div
             className="music-panel rounded-2xl border border-black/10 p-4 sm:p-6 dark:border-white/10"
+            role="status"
             aria-label="Loading Spotify playback"
             aria-busy="true"
         >
@@ -203,32 +205,58 @@ export default function SpotifyNowPlaying() {
 
     useEffect(() => {
         let active = true;
+        let playbackTimer: number | undefined;
+        let requestController: AbortController | null = null;
 
         async function loadPlayback() {
+            const controller = new AbortController();
+            const timeoutTimer = window.setTimeout(
+                () => controller.abort(),
+                REQUEST_TIMEOUT_MS,
+            );
+            requestController = controller;
+
             try {
-                const result = await fetch("/api/spotify/playback");
+                const result = await fetch("/api/spotify/playback", {
+                    signal: controller.signal,
+                });
                 const data = (await result.json()) as SpotifyPlaybackResponse;
-                if (active) {
+                if (active && requestController === controller) {
                     setNow(Date.now());
                     setResponse(data);
                 }
             } catch {
-                if (active) {
+                if (active && requestController === controller) {
                     setResponse({
                         configured: true,
                         error: "Spotify is taking a short intermission.",
                     });
                 }
+            } finally {
+                window.clearTimeout(timeoutTimer);
+
+                if (requestController === controller) {
+                    requestController = null;
+                }
+
+                if (active) {
+                    playbackTimer = window.setTimeout(
+                        loadPlayback,
+                        REFRESH_INTERVAL_MS,
+                    );
+                }
             }
         }
 
         void loadPlayback();
-        const playbackTimer = window.setInterval(loadPlayback, REFRESH_INTERVAL_MS);
         const clockTimer = window.setInterval(() => setNow(Date.now()), 1_000);
 
         return () => {
             active = false;
-            window.clearInterval(playbackTimer);
+            requestController?.abort();
+            if (playbackTimer !== undefined) {
+                window.clearTimeout(playbackTimer);
+            }
             window.clearInterval(clockTimer);
         };
     }, []);
@@ -238,7 +266,10 @@ export default function SpotifyNowPlaying() {
 
         if (!response.configured) {
             return (
-                <div className="music-panel rounded-2xl border border-black/10 p-8 text-center dark:border-white/10">
+                <div
+                    className="music-panel rounded-2xl border border-black/10 p-8 text-center dark:border-white/10"
+                    role="status"
+                >
                     <p className="text-sm text-[#f54703]">not connected yet</p>
                     <p className="mx-auto mt-3 max-w-md leading-7 opacity-75">
                         This page is ready for Spotify; it just needs its private
@@ -250,7 +281,10 @@ export default function SpotifyNowPlaying() {
 
         if ("error" in response) {
             return (
-                <div className="music-panel rounded-2xl border border-black/10 p-8 text-center dark:border-white/10">
+                <div
+                    className="music-panel rounded-2xl border border-black/10 p-8 text-center dark:border-white/10"
+                    role="status"
+                >
                     <p className="text-sm text-[#f54703]">intermission</p>
                     <p className="mt-3 opacity-75">{response.error}</p>
                 </div>
@@ -277,5 +311,5 @@ export default function SpotifyNowPlaying() {
         );
     }, [now, response]);
 
-    return <div aria-live="polite">{content}</div>;
+    return <div>{content}</div>;
 }
