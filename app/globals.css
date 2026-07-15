@@ -45,6 +45,68 @@ body {
     transition: clip-path 220ms var(--ease-out);
 }
 
+.music-panel {
+    background:
+        radial-gradient(circle at 100% 0%, rgb(245 71 3 / 10%), transparent 42%),
+        color-mix(in srgb, var(--foreground) 3%, transparent);
+}
+
+.music-cover,
+.music-spotify-link,
+.music-recent-item,
+.music-ranked-item,
+.music-range-option {
+    transition:
+        transform 160ms var(--ease-out),
+        color 180ms ease,
+        background-color 180ms ease;
+}
+
+.music-progress {
+    transition: transform 1s linear;
+}
+
+.music-cover:active,
+.music-spotify-link:active,
+.music-recent-item:active,
+.music-ranked-item:active,
+.music-range-option:active {
+    transform: scale(0.97);
+}
+
+.music-range-control {
+    background: color-mix(in srgb, var(--foreground) 3%, transparent);
+}
+
+.music-range-option.is-selected {
+    background: #f54703;
+    color: #ffffff;
+}
+
+.music-range-option:focus-visible,
+.music-ranked-item:focus-visible,
+.music-text-link:focus-visible {
+    outline: 2px solid #f54703;
+    outline-offset: 2px;
+}
+
+.music-range-results {
+    animation: music-range-enter 220ms var(--ease-out) both;
+}
+
+.music-insight-card {
+    background: color-mix(in srgb, var(--foreground) 2.5%, transparent);
+}
+
+.music-text-link {
+    transition: color 180ms ease;
+}
+
+.music-bar {
+    animation: music-bar-enter 420ms var(--ease-out) both;
+    transform-origin: bottom;
+}
+
 @media (hover: hover) and (pointer: fine) {
     .motion-link:hover .motion-link-underline {
         clip-path: inset(0 0 0 0);
@@ -61,6 +123,32 @@ body {
 
     .motion-back-link:hover .motion-back-arrow {
         transform: translateX(-0.25rem);
+    }
+
+    .music-cover:hover {
+        transform: translateY(-2px);
+    }
+
+    .music-spotify-link:hover {
+        background-color: #35e575;
+    }
+
+    .music-recent-item:hover {
+        background-color: color-mix(in srgb, var(--foreground) 5%, transparent);
+        transform: translateX(2px);
+    }
+
+    .music-ranked-item:hover {
+        background-color: color-mix(in srgb, var(--foreground) 5%, transparent);
+        transform: translateX(2px);
+    }
+
+    .music-range-option:not(.is-selected):hover {
+        background-color: color-mix(in srgb, var(--foreground) 5%, transparent);
+    }
+
+    .music-text-link:hover {
+        color: #f54703;
     }
 }
 
@@ -81,6 +169,24 @@ body {
     }
     to {
         opacity: 1;
+    }
+}
+
+@keyframes music-range-enter {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes music-bar-enter {
+    from {
+        opacity: 0;
+        transform: scaleY(0.08);
     }
 }
 
@@ -114,5 +220,30 @@ body {
         transform: none;
         translate: none;
         scale: none;
+    }
+
+    .music-cover,
+    .music-recent-item,
+    .music-ranked-item,
+    .music-range-option,
+    .music-spotify-link,
+    .music-progress {
+        transition: none;
+    }
+
+    .music-cover:hover,
+    .music-cover:active,
+    .music-recent-item:hover,
+    .music-recent-item:active,
+    .music-ranked-item:hover,
+    .music-ranked-item:active,
+    .music-range-option:active,
+    .music-spotify-link:active {
+        transform: none;
+    }
+
+    .music-range-results,
+    .music-bar {
+        animation: none;
     }
 }

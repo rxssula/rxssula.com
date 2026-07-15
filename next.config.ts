@@ -3,7 +3,17 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
     pageExtensions: ["ts", "tsx", "md", "mdx"],
-    /* config options here */
+    images: {
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "i.scdn.co",
+                port: "",
+                pathname: "/image/**",
+                search: "",
+            },
+        ],
+    },
 };
 
 const withMDX = createMDX({
