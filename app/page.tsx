@@ -50,8 +50,7 @@ export default function Home() {
             </p>
             <br />
             <p className="motion-section" style={{ animationDelay: "135ms" }}>
-                Check out my <CustomLink href="/blog">blog</CustomLink> and what I
-                am <CustomLink href="/music">listening to</CustomLink>.
+                Check out my <CustomLink href="/blog">blog</CustomLink>.
             </p>
             <br />
             <div
